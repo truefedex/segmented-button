@@ -31,7 +31,7 @@ dependencies {
 }
 ```
 
-##### If you need default pill-looking sectioned control then defince your drawable for section like this 
+##### If you need default pill-looking sectioned control then define your drawable for section like this 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
@@ -47,7 +47,7 @@ dependencies {
     </item>
 </selector>
 ```
-Pay attention to android:state_activated="true" used here.
+Pay attention to android:state_activated="true" used here for checked state.
 
 ##### Add segmented button to your layout xml like this
 ```xml
