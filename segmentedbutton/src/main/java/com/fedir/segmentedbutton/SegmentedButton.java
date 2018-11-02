@@ -151,27 +151,32 @@ public class SegmentedButton extends LinearLayout {
     protected void updateChildViewsDecorations() {
         for (int i = 0; i < getChildCount(); i++) {
             View child = this.getChildAt(i);
-            child.setActivated(child.getId() == this.checkedId);
-            if (child.getBackground() != null && child.getBackground() instanceof StateListDrawable) {
-                StateListDrawable stateList = (StateListDrawable)child.getBackground();
-                if (stateList.getCurrent() instanceof GradientDrawable) {
-                    GradientDrawable shape = (GradientDrawable)stateList.getCurrent();
-                    float[] corners;
-                    if (getOrientation() == HORIZONTAL) {
-                        corners = i == 0 ?
-                                new float[]{cornerRadiusX, cornerRadiusY, 0.0F, 0.0F, 0.0F, 0.0F, cornerRadiusX, cornerRadiusY} :
-                                (i == this.getChildCount() - 1 ?
-                                        new float[]{0.0F, 0.0F, cornerRadiusX, cornerRadiusY, cornerRadiusX, cornerRadiusY, 0.0F, 0.0F} :
-                                        new float[]{0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F});
-                    } else {
-                        corners = i == 0 ?
-                                new float[]{cornerRadiusX, cornerRadiusY, cornerRadiusX, cornerRadiusY, 0.0F, 0.0F, 0.0F, 0.0F} :
-                                (i == this.getChildCount() - 1 ?
-                                        new float[]{0.0F, 0.0F, 0.0F, 0.0F, cornerRadiusX, cornerRadiusY, cornerRadiusX, cornerRadiusY} :
-                                        new float[]{0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F});
-                    }
-                    shape.setCornerRadii(corners);
+            boolean checked = child.getId() == this.checkedId;
+            child.setActivated(checked);// use activated state since our custom view does not need to be checkable
+            decorateOneSegmentView(child, checked, i, getChildCount());
+        }
+    }
+
+    protected void decorateOneSegmentView(View child, boolean checked, int index, int count) {
+        if (child.getBackground() != null && child.getBackground() instanceof StateListDrawable) {
+            StateListDrawable stateList = (StateListDrawable)child.getBackground();
+            if (stateList.getCurrent() instanceof GradientDrawable) {
+                GradientDrawable shape = (GradientDrawable)stateList.getCurrent();
+                float[] corners;
+                if (getOrientation() == HORIZONTAL) {
+                    corners = index == 0 ? // first view in segment
+                            new float[]{cornerRadiusX, cornerRadiusY, 0.0F, 0.0F, 0.0F, 0.0F, cornerRadiusX, cornerRadiusY} :
+                            (index == count - 1 ? // last view in segment
+                                    new float[]{0.0F, 0.0F, cornerRadiusX, cornerRadiusY, cornerRadiusX, cornerRadiusY, 0.0F, 0.0F} :
+                                    new float[]{0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F});
+                } else {
+                    corners = index == 0 ?  // first view in segment
+                            new float[]{cornerRadiusX, cornerRadiusY, cornerRadiusX, cornerRadiusY, 0.0F, 0.0F, 0.0F, 0.0F} :
+                            (index == count - 1 ? // last view in segment
+                                    new float[]{0.0F, 0.0F, 0.0F, 0.0F, cornerRadiusX, cornerRadiusY, cornerRadiusX, cornerRadiusY} :
+                                    new float[]{0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F});
                 }
+                shape.setCornerRadii(corners);
             }
         }
     }
