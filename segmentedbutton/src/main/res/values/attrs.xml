@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SegmentedButton">
+        <attr name="checkedButton" format="reference"/>
+        <attr name="cornerRadiusX" format="float"/>
+        <attr name="cornerRadiusY" format="float"/>
+    </declare-styleable>
+</resources>
